@@ -8,21 +8,21 @@ unsigned long releasedTime = 0;
 
 bool isLongPress()
 {
-    return releasedTime - pressedTime >= SEC_IN_MS(0.5);
+    return (releasedTime - pressedTime >= LONGPRESS_THRESHOLD);
+    // || (millis() - pressedTime >= LONGPRESS_THRESHOLD);
 }
 
 void setConfig(void shortPressCallback(), void longPressCallback())
 {
     // Serial.println("setConfig");
     currentState = digitalRead(BUTTON_PIN);
+    if (currentState == LOW)
+        Serial.println("PRESSED");
+
     if (lastState == HIGH && currentState == LOW) // pressed
-    {
-        // Serial.println("pressing down");
         pressedTime = millis();
-    }
-    else if (lastState == LOW && currentState == HIGH) // released
+    else if ((lastState == LOW && currentState == HIGH)) // released
     {
-        // Serial.println("released");
         releasedTime = millis();
 
         if (isLongPress())
