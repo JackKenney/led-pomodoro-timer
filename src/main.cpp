@@ -4,7 +4,7 @@
 
 void setup()
 {
-  setAllLEDs(0, 0, 0);
+  setAllLEDs(10, 0, 10);
   FastLED.show();
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);

@@ -5,27 +5,38 @@ int lastState = HIGH; // assume button is not pressed when plugged in
 int currentState;
 unsigned long pressedTime = 0;
 unsigned long releasedTime = 0;
+bool longPressCalledEarly = false;
 
-bool isLongPress()
+bool isLongPress(bool held)
 {
-    return (releasedTime - pressedTime >= LONGPRESS_THRESHOLD);
-    // || (millis() - pressedTime >= LONGPRESS_THRESHOLD);
+    if (held)
+        return (millis() - pressedTime >= LONGPRESS_THRESHOLD);
+    else 
+        return (releasedTime - pressedTime >= LONGPRESS_THRESHOLD);
 }
 
 void setConfig(void shortPressCallback(), void longPressCallback())
 {
     // Serial.println("setConfig");
     currentState = digitalRead(BUTTON_PIN);
-    if (currentState == LOW)
-        Serial.println("PRESSED");
-
+    
     if (lastState == HIGH && currentState == LOW) // pressed
         pressedTime = millis();
-    else if ((lastState == LOW && currentState == HIGH)) // released
+    else if(lastState == LOW && currentState == LOW) {
+        if (isLongPress(true)){
+            longPressCallback();
+            longPressCalledEarly = true;
+        }
+    }    
+    else if (lastState == LOW && currentState == HIGH) // released
     {
+        if (longPressCalledEarly) {
+            longPressCalledEarly = false;
+            lastState = currentState;
+            return;
+        }
         releasedTime = millis();
-
-        if (isLongPress())
+        if (isLongPress(false))
             longPressCallback();
         else
             shortPressCallback();
