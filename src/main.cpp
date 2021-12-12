@@ -12,19 +12,19 @@ void setup()
 
 void shortPress()
 {
-  Serial.write("shortPress");
+  Serial.println("shortPress");
   setAllLEDs(rand() % MAX_BRIGHTNESS, rand() % MAX_BRIGHTNESS, rand() % MAX_BRIGHTNESS);
   FastLED.show();
 }
 
 void longPress()
 {
-  Serial.write("longPress");
+  Serial.println("longPress");
   setAllLEDs(0, 0, 0);
   FastLED.show();
 }
 
 void loop()
 {
-  setConfig(&shortPress, &longPress);
+  setConfig(shortPress, longPress);
 }
