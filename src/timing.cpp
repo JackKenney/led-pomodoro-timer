@@ -17,7 +17,6 @@ bool isLongPress(bool held)
 
 void setConfig(void shortPressCallback(), void longPressCallback())
 {
-    // Serial.println("setConfig");
     currentState = digitalRead(BUTTON_PIN);
     
     if (lastState == HIGH && currentState == LOW) // pressed
