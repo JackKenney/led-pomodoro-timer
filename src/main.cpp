@@ -12,14 +12,18 @@ void setup()
 
 void shortPress()
 {
-  Serial.println("shortPress");
-  setAllLEDs(rand() % MAX_BRIGHTNESS, rand() % MAX_BRIGHTNESS, rand() % MAX_BRIGHTNESS);
+  // Serial.println("shortPress");
+  setAllLEDs(
+    rand() % MAX_BRIGHTNESS, 
+    rand() % MAX_BRIGHTNESS, 
+    rand() % MAX_BRIGHTNESS
+  );
   FastLED.show();
 }
 
 void longPress()
 {
-  Serial.println("longPress");
+  // Serial.println("longPress");
   setAllLEDs(0, 0, 0);
   FastLED.show();
 }

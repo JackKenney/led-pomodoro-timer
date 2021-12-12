@@ -10,8 +10,9 @@ const uint8_t BUTTON_PIN = 5;
 const uint8_t NUM_LEDS = 5;
 const uint8_t MAX_BRIGHTNESS = 128;
 const long LONGPRESS_THRESHOLD = SEC_IN_MS(0.5);
+const long DELAY_LENGTH =  SEC_IN_MS(0.25);
 
-const enum Mode {
+enum Mode {
     rest = 0,
     work = 1
 };

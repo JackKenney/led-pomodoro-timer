@@ -2,43 +2,46 @@
 #include "timing.hpp"
 
 int lastState = HIGH; // assume button is not pressed when plugged in
-int currentState;
+int currentState = HIGH; // assume button is not pressed when plugged in
 unsigned long pressedTime = 0;
 unsigned long releasedTime = 0;
 bool longPressCalledEarly = false;
 
-bool isLongPress(bool held)
+bool isLongPress()
 {
-    if (held)
         return (millis() - pressedTime >= LONGPRESS_THRESHOLD);
-    else 
-        return (releasedTime - pressedTime >= LONGPRESS_THRESHOLD);
 }
 
 void setConfig(void shortPressCallback(), void longPressCallback())
 {
+    if (millis() - releasedTime < DELAY_LENGTH)
+        return;
+
     currentState = digitalRead(BUTTON_PIN);
-    
-    if (lastState == HIGH && currentState == LOW) // pressed
+
+    // pressed
+    if (lastState == HIGH && currentState == LOW) {
         pressedTime = millis();
+    }
+
+    // held
     else if(lastState == LOW && currentState == LOW) {
-        if (isLongPress(true)){
+        if (isLongPress()){
             longPressCallback();
-            longPressCalledEarly = true;
         }
-    }    
-    else if (lastState == LOW && currentState == HIGH) // released
+    }
+
+    // released
+    else if (lastState == LOW && currentState == HIGH)
     {
-        if (longPressCalledEarly) {
-            longPressCalledEarly = false;
-            lastState = currentState;
-            return;
-        }
-        releasedTime = millis();
-        if (isLongPress(false))
+        if (isLongPress())
             longPressCallback();
         else
             shortPressCallback();
+
+        releasedTime = millis();
+        pressedTime = millis();
+
     }
     lastState = currentState;
 }
