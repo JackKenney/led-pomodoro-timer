@@ -1,5 +1,5 @@
 #include "consts.hpp"
-#include "timing.hpp"
+#include "button.hpp"
 
 int lastState = HIGH; // assume button is not pressed when plugged in
 int currentState = HIGH; // assume button is not pressed when plugged in
