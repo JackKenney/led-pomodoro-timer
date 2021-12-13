@@ -8,19 +8,19 @@ unsigned long releasedTime = 0;
 
 bool isLongPress()
 {
-        return (millis() - pressedTime >= LONGPRESS_THRESHOLD);
+        return (GET_MILLIS() - pressedTime >= LONGPRESS_THRESHOLD);
 }
 
 void watchButton(void shortPressCallback(), void longPressCallback())
 {
-    if (millis() - releasedTime < DELAY_LENGTH)
+    if (GET_MILLIS() - releasedTime < DELAY_LENGTH)
         return;
 
     currentState = digitalRead(BUTTON_PIN);
 
     // pressed
     if (lastState == HIGH && currentState == LOW) {
-        pressedTime = millis();
+        pressedTime = GET_MILLIS();
     }
 
     // held
@@ -38,8 +38,8 @@ void watchButton(void shortPressCallback(), void longPressCallback())
         else
             shortPressCallback();
 
-        releasedTime = millis();
-        pressedTime = millis();
+        releasedTime = GET_MILLIS();
+        pressedTime = GET_MILLIS();
 
     }
     lastState = currentState;
