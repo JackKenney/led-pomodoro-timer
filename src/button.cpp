@@ -12,7 +12,7 @@ bool isLongPress()
         return (millis() - pressedTime >= LONGPRESS_THRESHOLD);
 }
 
-void setConfig(void shortPressCallback(), void longPressCallback())
+void watchButton(void shortPressCallback(), void longPressCallback())
 {
     if (millis() - releasedTime < DELAY_LENGTH)
         return;

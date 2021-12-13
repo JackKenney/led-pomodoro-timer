@@ -1,5 +1,5 @@
 #include "consts.hpp"
-#include "timing.hpp"
+#include "button.hpp"
 #include "lights.hpp"
 
 void setup()
@@ -30,5 +30,5 @@ void longPress()
 
 void loop()
 {
-  setConfig(shortPress, longPress);
+  watchButton(shortPress, longPress);
 }
