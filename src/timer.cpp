@@ -5,6 +5,7 @@ long currentLength;
 uint8_t sectionsToDarken = 0;
 CRGB color;
 long length, section;
+double portion;
 
 void trackTimer(Mode mode, long timerStart) {
     length = getTotalLength(mode);
@@ -12,36 +13,47 @@ void trackTimer(Mode mode, long timerStart) {
     color = getColor(mode);
 
     currentLength = GET_MILLIS() - timerStart;
-    uint8_t sectionsToDarken = currentLength / restSection;
-    double portion = (double)((length-currentLength) % section) / section;
+    sectionsToDarken = currentLength / section;
+    portion = (double)((length-currentLength) % section) / section;
 
     setAllLEDs(color);
-    for (int i=0; i<sectionsToDarken; i++) {
-        if (i==sectionsToDarken-1){
-            setLED(NUM_LEDS-1-i, color.nscale8(255*portion));            
-        }
-        else
-            setLED(NUM_LEDS-1-i, 0,0,0);
+    for (int i=1; i<=sectionsToDarken; i++) {
+        setLED(NUM_LEDS-i, 0,0,0);
     }
-    FastLED.show();
+    setLED(NUM_LEDS-sectionsToDarken-1 , color.nscale8(255*portion));
 }
 
 long getSectionLength(Mode mode) {
-    if (mode == rest)
+    switch (mode)
+    {
+    case rest:
         return restSection;
-    else
+    case work:
         return workSection;
+    default:
+        return unknown;
+    }
 }
 long getTotalLength(Mode mode) {
-    if (mode == rest)
+    switch (mode)
+    {
+    case rest:
         return restLength;
-    else
+    case work:
         return workLength;
+    default:
+        return unknown;
+    }
 }
 
 CRGB getColor(Mode mode) {
-    if (mode == rest)
+    switch (mode)
+    {
+    case rest:
         return restColor;
-    else
+    case work:
         return workColor;
+    default:
+    return unknown;
+    }
 }

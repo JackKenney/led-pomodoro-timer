@@ -15,14 +15,17 @@ void setup()
 
 void shortPress()
 {
-  if (currentMode == rest) {
-      currentMode = work;
-      setAllLEDs(getColor(currentMode));
-    }
-  else {
-      currentMode = rest;
-      setAllLEDs(getColor(currentMode));
-    }
+  switch (currentMode)
+  {
+  case rest:
+    currentMode = work;
+    break;
+  case work:
+    currentMode = rest;
+    break;
+  }
+  setAllLEDs(getColor(currentMode));
+  timerStart = GET_MILLIS();
 }
 
 void longPress()

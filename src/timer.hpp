@@ -5,17 +5,17 @@ using namespace std;
 
 enum Mode {
     rest = 0,
-    work = 1
+    work = 1,
+    unknown = 2
 };
 
+const CRGB workColor = CRGB(128,64,0);
 const long workLength = MIN_IN_MS(25);
 const long workSection = workLength / 5;
 
+const CRGB restColor = CRGB(32,0,64);
 const long restLength = MIN_IN_MS(5);
 const long restSection = restLength / 5;
-
-const CRGB workColor = CRGB(128,64,0);
-const CRGB restColor = CRGB(32,0,64);
 
 void trackTimer(Mode mode, long timerStart);
 
