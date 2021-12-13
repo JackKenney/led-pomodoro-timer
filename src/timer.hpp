@@ -1,7 +1,6 @@
 #pragma once
 
 #include "consts.hpp"
-using namespace std;
 
 enum Mode {
     rest = 0,

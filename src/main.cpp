@@ -23,6 +23,9 @@ void shortPress()
   case work:
     currentMode = rest;
     break;
+  case unknown:
+  default:
+    currentMode = rest;
   }
   setAllLEDs(getColor(currentMode));
   timerStart = GET_MILLIS();
@@ -37,6 +40,18 @@ void loop()
 {
   watchButton(shortPress, longPress);
   EVERY_N_MILLIS(8) {
+    if(GET_MILLIS() - timerStart >= getTotalLength(currentMode)) {
+      switch (currentMode)
+      {
+      case work:
+        currentMode = rest;
+        timerStart = GET_MILLIS();
+        break;
+      case rest:
+      default:
+        return;
+      }
+    }
     trackTimer(currentMode, timerStart);
   }
   
