@@ -5,7 +5,6 @@ int lastState = HIGH; // assume button is not pressed when plugged in
 int currentState = HIGH; // assume button is not pressed when plugged in
 unsigned long pressedTime = 0;
 unsigned long releasedTime = 0;
-bool longPressCalledEarly = false;
 
 bool isLongPress()
 {
